@@ -74,6 +74,26 @@ app.post("/api/memoUploadHandler", async (req, res) => {
   return res.json(resultCode);
 });
 
+app.post("/api/deleteBtnHandler", async (req, res) => {
+  const {
+    body: {
+      params: { inputData },
+    },
+  } = req;
+
+  let resultCode = 0;
+
+  try {
+    await firestore.collection("Memo").doc(inputData.refKey).delete();
+
+    resultCode = 1;
+  } catch (e) {
+    console.log(e);
+  }
+
+  return res.json(resultCode);
+});
+
 app.listen(PORT, () => {
   console.log(`${PORT} Server Start✅`);
 });
